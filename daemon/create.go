@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"strconv"
 )
 
 const (
@@ -20,7 +19,7 @@ func GetHomeDir() (string, error) {
 
 func CheckDirExistance(rootPath string) (bool, error) {
 	if _, err := os.Stat(rootPath); err != nil {
-		if err.Error() == "no such file or directory" {
+		if err.Error() == "no such file or directory" { //resolve this error in a better
 			return false, nil
 		}
 
@@ -57,7 +56,10 @@ func CreateNewInstances(instanceCount int) error {
 		}
 
 	}
-	Init(InstWithPaths)
+	err := Init(InstWithPaths)
+	if err != nil {
+		return ErrCouldNotCreateInst
+	}
 	//check return val
-	return ErrCouldNotCreateInst
+	return nil
 }

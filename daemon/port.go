@@ -30,16 +30,35 @@ func FindAny() {
 
 }
 
-func Assign() {
+func Assign() (string, error) {
 	port := 0
 	m1, err := ma.NewMultiaddr("/ip4/127.0.0.1/tcp/")
 
 }
 
 func AssignToGateway() {
+	Assign()
 
 }
 
 func AssignToAPI() {
+	Assign()
+}
+
+func PortChoice() {
+	fmt.Print("Assign port by\na)Generating a random port number\nb)User-typed port number based on the availability")
+	var choice string
+	fmt.Scanf("%s", &choice)
+
+	switch choice {
+	case "a", "A":
+		Find()
+	case "b", "B":
+		FindAny()
+	default:
+		for {
+			fmt.Print("Please enter a valid option")
+		}
+	}
 
 }
