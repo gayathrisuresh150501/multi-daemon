@@ -18,10 +18,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = daemon.Start()
-	if err != nil {
-		log.Fatal(err)
-	}
+	daemon.Start()
+	
 
 	response := daemon.GetResponse()
 	if response {

@@ -1,26 +1,28 @@
 package daemon
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
+	"sync"
 )
 
-func ExecCmd(ipfs, ipfsCmd string) error{
-	cmd := exec.Command(ipfs, ipfsCmd)
+func ExecuteCommand(wg *sync.WaitGroup) {
+	defer wg.Done()
 
-	// Set command output to os.Stdout and os.Stderr
+	// var cmd *exec.Cmd
+	cmd := exec.Command("ipfs", "daemon")
+
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	err := cmd.Run()
+	err := cmd.Start()
 	if err != nil {
-		return ErrUnableToRunDaemon
+		panic(err)
+		// log.Fatal(err)
 	}
 
-	// err = cmd.Wait()
-	// if err != nil {
-	// 	return err
-	// }
+	execPath := os.Getenv("IPFS_PATH")
 
-	return nil
+	fmt.Printf("Command: %s\nOutput: %s\n", "ipfs daemon on", execPath)
 }

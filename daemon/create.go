@@ -11,15 +11,24 @@ const (
 )
 
 var HomeDir, _ = GetHomeDir()
-var Path = HomeDir + "/" + RootConfigDir
+var RootPath = HomeDir + `\` + RootConfigDir
+var InstWithPaths = make(map[string]string)
 
 func GetHomeDir() (string, error) {
 	return os.UserHomeDir()
 }
 
-func CheckDirExistance(rootPath string) (bool, error) {
-	if _, err := os.Stat(rootPath); err != nil {
-		if err.Error() == "no such file or directory" { //resolve this error in a better
+func Stat() error {
+	if _, err := os.Stat("hgffj"); err != nil {
+		return fmt.Errorf("the error in Stat is %s", err.Error())
+	}
+
+	return nil
+}
+func CheckDirExistance(Path string) (bool, error) {
+	if _, err := os.Stat(Path); err != nil {
+
+		if os.IsNotExist(err) {
 			return false, nil
 		}
 
@@ -29,37 +38,55 @@ func CheckDirExistance(rootPath string) (bool, error) {
 	return true, nil
 }
 
-var InstWithPaths map[string]string
-
 func CreateRootInst() error {
-	exists, _ := CheckDirExistance(Path)
+	exists, _ := CheckDirExistance(RootPath)
 	if !exists {
-		exec.Command("ipfs", "init")
+		exec.Command("ipfs", "init").Run()
 	}
-	InstWithPaths[RootConfigDir] = Path
-
 	return ErrCouldNotCreateRootInst
 }
 func CreateNewInstances(instanceCount int) error {
+	CreateRootInst()
 	os.Chdir(HomeDir)
+	// fmt.Print(HomeDir)
+	InstWithPaths[RootConfigDir] = RootPath
 
 	for i := 1; i < instanceCount; i++ {
-		instName := RootConfigDir + fmt.Sprintf("%d",i)
+		instName := RootConfigDir + fmt.Sprintf("%d", i)
+		// fmt.Println(">>>>>>>>>>>>>>>>>>>>>>>", instName)
 
 		exists, err := CheckDirExistance(instName)
-		if err == nil && !exists {
-			os.Mkdir(instName, 0755)
-			instPath := HomeDir + instName
+		// fmt.Println(">>>>>>>>>>>>>>>>>>>>>>",exists, err)
+
+		if err == nil && exists {
+
+			instPath := HomeDir + `\` + instName
 			InstWithPaths[instName] = instPath
 		} else {
-			return ErrDirNotFound
+			os.Mkdir(instName, 0755)
+			instPath := HomeDir + `\` + instName
+			InstWithPaths[instName] = instPath
+			err := SetPath(instPath)
+			if err != nil {
+				return ErrUnableToSetPath
+			}
+			err = Init()
+			if err != nil {
+				return ErrCouldNotCreateInst
+			}
+			AssignToGateway()
+			AssignToAPI()
+			// fmt.Println(">>>>>>>>>>>>>>>>>>>>>>>", instPath)
+			// return ErrDirNotFound
 		}
 
 	}
-	err := Init(InstWithPaths)
-	if err != nil {
-		return ErrCouldNotCreateInst
-	}
+
+	// fmt.Println(InstWithPaths)
+	// err := Init(InstWithPaths)
+	// if err != nil {
+	// 	return ErrCouldNotCreateInst
+	// }
 	//check return val
 	return nil
 }
