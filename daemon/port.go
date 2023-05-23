@@ -7,7 +7,6 @@ import (
 	"os/exec"
 	"strconv"
 
-	ma "github.com/multiformats/go-multiaddr"
 )
 
 // type Port struct {
@@ -59,14 +58,10 @@ func Find() (string, error) {
 // }
 
 func Assign() (string, error) {
-	m1, err := ma.NewMultiaddr("/ip4/127.0.0.1/tcp/")
-	if err != nil {
-		return "", err
-	}
-	Addr := m1.String()
+	mAddr := `/ip4/127.0.0.1/tcp/`
 	PortNo, _ := Find()
 
-	return Addr + PortNo, nil
+	return mAddr + PortNo, nil
 }
 
 func AssignToGateway() {

@@ -42,7 +42,9 @@ func GetResponse() bool {
 	fmt.Print("Would you like to shutdown the daemons? (y/n)")
 
 	for {
-		fmt.Scanf("%s", resp)
+		if n, err := fmt.Scanf("%v", &resp); err != nil {
+			fmt.Println("scan err:", err, n)
+		}
 		if strings.ToLower(resp) == "y" {
 			break
 		}

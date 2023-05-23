@@ -19,7 +19,6 @@ func main() {
 	}
 
 	daemon.Start()
-	
 
 	response := daemon.GetResponse()
 	if response {
