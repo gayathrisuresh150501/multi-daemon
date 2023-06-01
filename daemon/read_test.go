@@ -1,9 +1,8 @@
-package daemon_test
+package daemon
 
 import (
 	// "errors"
 	"testing"
-	"package/daemon"
 )
 
 // var ErrInvalidNodeCount = errors.New("invalid node count")
@@ -11,10 +10,12 @@ import (
 func TestRead(t *testing.T) {
 
 	t.Run("Valid Input", func(t *testing.T) {
+		t.Parallel()
+
 		expectedCount := 2
 		expectedErr := error(nil)
 
-		count, err := daemon.Read()
+		count, err := Read()
 
 		if count != expectedCount {
 			t.Errorf("Expected count: %d, but got: %d", expectedCount, count)
@@ -25,10 +26,12 @@ func TestRead(t *testing.T) {
 	})
 
 	t.Run("Invalid Input", func(t *testing.T) {
-		expectedCount := 0
-		expectedErr := daemon.ErrInvalidNodeCount
+		t.Parallel()
 
-		count, err := daemon.Read()
+		expectedCount := 0
+		expectedErr := ErrInvalidNodeCount
+
+		count, err := Read()
 
 		if count != expectedCount {
 			t.Errorf("Expected count: %d, but got: %d", expectedCount, count)
@@ -37,11 +40,14 @@ func TestRead(t *testing.T) {
 			t.Errorf("Expected error: %v, but got: %v", expectedErr, err)
 		}
 	})
-	t.Run("Negative Input", func(t *testing.T) {
-		expectedCount := -3
-		expectedErr := daemon.ErrInvalidNodeCount
 
-		count, err := daemon.Read()
+	t.Run("Negative Input", func(t *testing.T) {
+		t.Parallel()
+
+		expectedCount := -3
+		expectedErr := ErrInvalidNodeCount
+
+		count, err := Read()
 
 		if count != expectedCount {
 			t.Errorf("Expected count: %d, but got: %d", expectedCount, count)

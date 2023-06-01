@@ -1,14 +1,13 @@
 package daemon
 
 // import "fmt"
-
+var InstCount int = 2
 func Read() (int, error) {
-	var instCount int = 2
 		// fmt.Scanf("%d", &instCount)
 
-	if instCount <= 0 {
-		return instCount, ErrInvalidNodeCount
+	if InstCount <= 0 {
+		return InstCount, ErrInvalidNodeCount
 	}
 
-	return instCount, nil
+	return InstCount, nil
 }
