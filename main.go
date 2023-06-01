@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
+	"daemon"
 	"log"
-	"package/daemon"
 )
 
 func main() {
-	fmt.Print("Please enter the number of daemons to be spawned: ")
+	// fmt.Print("Please enter the number of daemons to be spawned: ")
 	nodeCount, err := daemon.Read()
 	if err != nil {
 		log.Fatal(err)
@@ -26,3 +25,7 @@ func main() {
 	}
 
 }
+
+// func CreateNewInstances(nodeCount invalid type) {
+// 	panic("unimplemented")
+// }
