@@ -14,8 +14,8 @@ import (
 // }
 
 func Find() (string, error) {
-	maxPort := 90000
-	minPort := 80000
+	maxPort := 8999
+	minPort := 8080
 
 	for i := 0; i < 10; i++ {
 		randPort := rand.Intn(maxPort-minPort) + minPort

@@ -5,7 +5,6 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-	"sync"
 )
 
 // type Daemon struct {
@@ -20,17 +19,17 @@ func Start() {
 	// 	exec.Command("ipfs", "daemon")
 	// }
 
-	var wg sync.WaitGroup
+	// var wg sync.WaitGroup
 
 	for _, path := range InstWithPaths {
-		wg.Add(1)
+		// wg.Add(1)
 		if err := SetPath(path); err != nil {
 			fmt.Println("SetPath Err:", err)
 		}
-		ExecuteCommand(&wg)
+		ExecuteCommand()
 	}
 
-	wg.Wait()
+	// wg.Wait()
 }
 
 func Shutdown() {

@@ -26,6 +26,4 @@ func main() {
 
 }
 
-// func CreateNewInstances(nodeCount invalid type) {
-// 	panic("unimplemented")
-// }
+

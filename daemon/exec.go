@@ -4,11 +4,10 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"sync"
 )
 
-func ExecuteCommand(wg *sync.WaitGroup) {
-	defer wg.Done()
+func ExecuteCommand() {
+	// defer wg.Done()
 
 	// var cmd *exec.Cmd
 	cmd := exec.Command("ipfs", "daemon")
