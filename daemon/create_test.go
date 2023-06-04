@@ -12,28 +12,51 @@ var Dir = DirPath + `\` + Dname
 
 
 func TestGetHomeDir(t *testing.T) {
-	got, _:= GetHomeDir()
-	want, _ := os.UserHomeDir()
-
-	if got != want {
-		t.Errorf("Could not fetch Home Directory Path.\ngot = %v, want = %v", got, want)
-	}
-}
-
-func TestDirExistance(t *testing.T) {
-	os.Chdir(DirPath)
-	got,err := CheckDirExistance(Dir)
+	want, err := os.UserHomeDir()
 	if err != nil {
-		t.Errorf("unexpected error: %v", err)
+		t.Errorf("error retrieving home directory: %v", err)
 	}
 
-	want := true
+	got, err := GetHomeDir()
+	if err != nil {
+		t.Errorf("unexpected error occurred: %v", err)
+	}
 
 	if got != want {
-		t.Errorf("Directory does not exist.\ngot = %v, want = %v", got, want)
+		t.Errorf("expected home directory '%s', but got '%s'", want, got)
+	}
+}
+
+func TestCheckDirExistance(t *testing.T) {
+	// Create a temporary directory for testing
+	dir := ".ipfs"
+	err := os.Mkdir(dir, 0755)
+	if err != nil {
+		t.Fatalf("Failed to create .ipfs directory: %v", err)
+	}
+	defer os.RemoveAll(dir)
+
+	// Test case 1: Existing directory
+	exists, err := CheckDirExistance(dir)
+	if err != nil {
+		t.Fatalf("Unexpected error occurred: %v", err)
+	}
+	if !exists {
+		t.Errorf("Expected directory to exist, but it does not")
 	}
 
+	// Test case 2: Non-existing directory
+	nonExistingDir := ".ipfs10"
+	exists, err = CheckDirExistance(nonExistingDir)
+	if err != nil {
+		t.Errorf("Unexpected error occurred: %v", err)
+	}
+	if exists {
+		t.Errorf("Expected directory to not exist, but it does")
+	}
 }
+
+
 
 func TestCreateRootInst(t *testing.T) {
 	os.Chdir(DirPath)
@@ -47,7 +70,7 @@ func TestCreateRootInst(t *testing.T) {
 	})
 
 	t.Run("Root instance does not exist, create root instance", func(t *testing.T) {
-		got := CreateRootInst()
+		// got := CreateRootInst()
 
 	})
 
@@ -55,6 +78,6 @@ func TestCreateRootInst(t *testing.T) {
 
 func TestCreateNewInstances(t *testing.T) {
 	os.Chdir(DirPath)
-	got := CreateNewInstances(InstCount)
+	// got := CreateNewInstances(InstCount)
 	
 }

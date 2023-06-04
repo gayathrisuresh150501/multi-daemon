@@ -4,6 +4,8 @@ import (
 	"net"
 	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestFind(t *testing.T) {
@@ -33,12 +35,10 @@ func TestFind(t *testing.T) {
 }
 
 func TestAssign(t *testing.T) {
-	got, err := Assign()
-	if err != nil {
-		t.Errorf("unexpected error: %v", err)
-	}
-
-	// want := 
+	result, err := Assign()
+	expectedResult := "/ip4/127.0.0.1/tcp/5001"
+	assert.NoError(t, err)
+	assert.Equal(t, expectedResult, result)
 }
 
 func TestAssignToGateway(t *testing.T) {
@@ -46,5 +46,5 @@ func TestAssignToGateway(t *testing.T) {
 }
 
 func TestAssignToAPI(t *testing.T) {
-	
+
 }

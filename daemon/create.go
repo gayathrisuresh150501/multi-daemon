@@ -18,13 +18,6 @@ func GetHomeDir() (string, error) {
 	return os.UserHomeDir()
 }
 
-// func Stat() error {
-// 	if _, err := os.Stat("hgffj"); err != nil {
-// 		return fmt.Errorf("the error in Stat is %s", err.Error())
-// 	}
-
-// 	return nil
-// }
 func CheckDirExistance(Path string) (bool, error) {
 	if _, err := os.Stat(Path); err != nil {
 
