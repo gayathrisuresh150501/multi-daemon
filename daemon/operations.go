@@ -14,12 +14,6 @@ import (
 // }
 
 func Start() {
-	// for _, inst := range InstWithPaths {
-	// 	SetPath(InstWithPaths[inst])
-	// 	exec.Command("ipfs", "daemon")
-	// }
-
-	// var wg sync.WaitGroup
 
 	for _, path := range InstWithPaths {
 		// wg.Add(1)
@@ -28,8 +22,6 @@ func Start() {
 		}
 		ExecuteCommand()
 	}
-
-	// wg.Wait()
 }
 
 func Shutdown() {
@@ -68,11 +60,6 @@ func Init() error {
 	if err != nil {
 		return err
 	}
-
-	// err = cmd.Wait()
-	// if err != nil {
-	// 	return err
-	// }
 
 	return nil
 }
