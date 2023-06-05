@@ -8,7 +8,7 @@ import (
 var DirPath, _ = os.UserHomeDir()
 var Dname = `.ipfs`
 
-var Dir = DirPath + `\` + Dname
+var Dir = DirPath + `/` + Dname
 
 
 func TestGetHomeDir(t *testing.T) {

@@ -67,7 +67,6 @@ func Assign() (string, error) {
 func AssignToGateway() {
 	configGtwy, _ := Assign()
 	// gtwyAddr := `"` + configGtwy + `"`
-	fmt.Println("gateway addres :", configGtwy)
 	if err := exec.Command("ipfs", "config", "Addresses.Gateway", configGtwy).Run(); err != nil {
 		fmt.Println("Error on gateway addres :", configGtwy, err)
 	}

@@ -11,7 +11,7 @@ const (
 )
 
 var HomeDir, _ = GetHomeDir()
-var RootPath = HomeDir + `\` + RootConfigDir
+var RootPath = HomeDir + `/` + RootConfigDir
 var InstWithPaths = make(map[string]string)
 
 func GetHomeDir() (string, error) {
@@ -53,11 +53,11 @@ func CreateNewInstances(instanceCount int) error {
 
 		if err == nil && exists {
 
-			instPath := HomeDir + `\` + instName
+			instPath := HomeDir + `/` + instName
 			InstWithPaths[instName] = instPath
 		} else {
 			os.Mkdir(instName, 0755)
-			instPath := HomeDir + `\` + instName
+			instPath := HomeDir + `/` + instName
 			InstWithPaths[instName] = instPath
 			err := SetPath(instPath)
 			if err != nil {
